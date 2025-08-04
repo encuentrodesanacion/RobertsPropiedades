@@ -1,0 +1,49 @@
+/* src/styles/video.css */
+
+/* Estilos para el contenedor de la tarjeta que contiene video y texto */
+.card-video-layout {
+  display: flex; /* Usa flexbox para alinear elementos en fila */
+  height: 280px; /* Define una altura fija para la tarjeta de video, ajusta según sea necesario */
+  /* Puedes usar un height diferente al de las imágenes si quieres que las tarjetas sean del mismo tamaño */
+  /* Si quieres que las tarjetas de imagen y video tengan la misma altura, ajusta el h-56 de las imágenes */
+}
+
+/* Estilos para la mitad del video */
+.card-video-half {
+  flex: 1; /* Ocupa la mitad del espacio disponible */
+  overflow: hidden; /* Asegura que el video no se desborde */
+}
+
+.card-video-half video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Cubre el área manteniendo la relación de aspecto */
+}
+
+/* Estilos para la mitad del contenido (descripción y botón) */
+.card-content-half {
+  flex: 1; /* Ocupa la otra mitad del espacio disponible */
+  background-color: white; /* Asegura un fondo blanco para el contenido */
+  color: #333; /* Color de texto por defecto */
+  /* El padding y las propiedades de flexbox se manejan con Tailwind en el JSX */
+}
+
+/* Opcional: Para tamaños de pantalla más pequeños, apilar verticalmente */
+@media (max-width: 768px) {
+  /* Ajusta el breakpoint si es necesario (ej: md de Tailwind) */
+  .card-video-layout {
+    flex-direction: column; /* Apila el video y el contenido verticalmente */
+    height: auto; /* Permite que la altura se ajuste automáticamente */
+  }
+
+  .card-video-half,
+  .card-content-half {
+    flex: none; /* Deshabilita el flex para que cada uno ocupe su propio espacio */
+    width: 100%; /* Ocupa todo el ancho */
+  }
+
+  /* Si el video debe tener una altura fija en móvil, puedes añadir: */
+  .card-video-half {
+    height: 200px; /* O la altura que desees para el video en móvil */
+  }
+}
