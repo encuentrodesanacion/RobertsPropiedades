@@ -38,7 +38,64 @@ const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
 const HomePage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const location = useLocation();
+  const location = useLocation(); // Nuevos estados para el filtro
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [priceFilter, setPriceFilter] = useState("all"); // 'all', 'low', 'medium', 'high' // Mueve la lista de propiedades a una variable
+
+  const propertiesData = [
+    {
+      type: "video",
+      video: Property4,
+      title: "Casa Moderna en Las Condes",
+      description:
+        "Amplia casa con 4 habitaciones, 3 baños, jardín y piscina. Excelente ubicación.",
+      price: "UF 12.500",
+      priceValue: 12500, // Añadimos un valor numérico para filtrar
+      link: "/propiedad/las-condes-moderna",
+      isSold: true,
+    },
+    {
+      type: "video",
+      video: Property5,
+      title: "Departamento Luminoso en Providencia",
+      description:
+        "Departamento de 2 habitaciones, 2 baños, balcón con vista panorámica. Cerca de metro.",
+      price: "UF 5.800",
+      priceValue: 5800,
+      link: "/propiedad/providencia-luminoso",
+      isSold: true,
+    },
+    {
+      type: "video",
+      video: Property3Video,
+      title: "Oficina Premium en Santiago Centro",
+      description:
+        "Espaciosa oficina con 3 privados, sala de reuniones y kitchenette. Ideal para tu negocio.",
+      price: "UF 3.200",
+      priceValue: 3200,
+      link: "/propiedad/santiago-oficina",
+      isSold: true,
+    },
+  ]; // Lógica de filtrado
+  const filteredProperties = propertiesData.filter((property) => {
+    // Filtro por texto de búsqueda
+    const matchesSearch =
+      property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      property.description.toLowerCase().includes(searchTerm.toLowerCase()); // Filtro por rango de precio
+
+    let matchesPrice = true;
+    if (priceFilter === "low") {
+      matchesPrice = property.priceValue < 6000;
+    } else if (priceFilter === "medium") {
+      matchesPrice =
+        property.priceValue >= 6000 && property.priceValue <= 10000;
+    } else if (priceFilter === "high") {
+      matchesPrice = property.priceValue > 10000;
+    }
+
+    return matchesSearch && matchesPrice;
+  });
 
   const [formData, setFormData] = useState({
     name: "",
